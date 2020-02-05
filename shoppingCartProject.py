@@ -85,4 +85,34 @@ while (userInput != "DONE"):
     else:
         inputInvalid = True
 
-#
+
+
+print("---------------------------------")
+print("Big Brain Food Store")
+print("---------------------------------")
+print(f"CHECKOUT AT: {str(datetime.date.today())}") #make this prettier
+print("---------------------------------")
+
+#enter loop to print contents of the user's inputs
+subtotal = 0
+i = 0
+while (i < len(userBought)):
+    purchasedProduct = products[userBought[i]]
+    print(f" + {purchasedProduct['name']} ({to_usd(purchasedProduct['price'])})")
+    subtotal = subtotal + purchasedProduct['price']
+
+
+    i = i + 1
+
+
+tax = subtotal*.0875
+total = subtotal + tax
+
+print("---------------------------------")
+#subtotal... etc goes here - calculate them in loop
+print(f"Subtotal: {to_usd(subtotal)}")
+print(f"Plus NYC Sales Tax (8.875%): {to_usd(tax)}")
+print(f"Total: {to_usd(total)}")
+print("---------------------------------")
+print("THANKS, SEE YOU AGAIN SOON!")
+print("---------------------------------")
