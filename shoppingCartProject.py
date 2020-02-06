@@ -1,4 +1,5 @@
 import datetime
+import time
 import os
 from dotenv import load_dotenv 
 from sendgrid import SendGridAPIClient
@@ -9,6 +10,13 @@ load_dotenv()
 
 #sets tax rate from env variable
 taxRate = float(os.getenv("TAX_RATE", "0.0"))
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
+MY_ADDRESS = os.getenv("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
+
+client = SendGridAPIClient(SENDGRID_API_KEY)
+
+subject = "Your Receipt from the Big Brain Food Store"
+
 
 
 products = [
@@ -93,12 +101,14 @@ while (userInput != "DONE"):
     else:
         inputInvalid = True
 
-
+#code for setting time found from: https://www.programiz.com/python-programming/datetime/current-datetime
+t = time.localtime()
+currentTime = time.strftime("%I:%m %p", t)
 
 print("---------------------------------")
 print("Big Brain Food Store")
 print("---------------------------------")
-print(f"CHECKOUT AT: {str(datetime.date.today())}") #how to print time?? ------
+print(f"CHECKOUT AT: {str(datetime.date.today())} {currentTime}") #how to print time?? ------
 print("---------------------------------")
 
 #enter loop to print contents of the user's inputs
@@ -119,8 +129,9 @@ total = subtotal + tax
 print("---------------------------------")
 #subtotal... etc goes here - calculate them in loop
 print(f"Subtotal: {to_usd(subtotal)}")
-print(f"Plus NYC Sales Tax (8.875%): {to_usd(tax)}")
+print(f"Plus NYC Sales Tax ({str(taxRate*100)}%): {to_usd(tax)}")
 print(f"Total: {to_usd(total)}")
 print("---------------------------------")
 print("THANKS, SEE YOU AGAIN SOON!")
 print("---------------------------------")
+
