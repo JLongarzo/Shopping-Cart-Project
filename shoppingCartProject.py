@@ -1,7 +1,15 @@
 import datetime
+import os
+from dotenv import load_dotenv 
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
-#from pprint import pprint
+load_dotenv()
+
+#sets tax rate from env variable
+taxRate = float(os.getenv("TAX_RATE", "0.0"))
+
 
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
@@ -90,7 +98,7 @@ while (userInput != "DONE"):
 print("---------------------------------")
 print("Big Brain Food Store")
 print("---------------------------------")
-print(f"CHECKOUT AT: {str(datetime.date.today())}") #make this prettier
+print(f"CHECKOUT AT: {str(datetime.date.today())}") #how to print time?? ------
 print("---------------------------------")
 
 #enter loop to print contents of the user's inputs
@@ -105,7 +113,7 @@ while (i < len(userBought)):
     i = i + 1
 
 
-tax = subtotal*.0875
+tax = subtotal*taxRate
 total = subtotal + tax
 
 print("---------------------------------")
