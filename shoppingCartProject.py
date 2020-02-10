@@ -152,6 +152,21 @@ print('myEmail: ', MY_ADDRESS)
 
 
 
+conn = http.client.HTTPSConnection("api.sendgrid.com")
+
+
+payload = "{\"personalizations\":[{\"to\":[{\"email\":\"jack@longarzo.com\",\"name\":\"John Doe\"}],\"dynamic_template_data\":{\"verb\":\"\",\"adjective\":\"\",\"noun\":\"\",\"currentDayofWeek\":\"\"},\"subject\":\"Hello, World!\"}],\"from\":{\"email\":\"jack@longarzo.com\",\"name\":\"John Doe\"},\"reply_to\":{\"email\":\"jack@longarzo.com\",\"name\":\"John Doe\"},\"template_id\":\"d-fe9ad486774c488fa28fdba2c92fd4b5\"}"
+
+headers = {
+    'authorization': "Bearer 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",
+    'content-type': "application/json"
+    }
+
+conn.request("POST", "/v3/mail/send", payload, headers)
+
+res = conn.getresponse()
+data = res.read()
+
 
 print("my address")
 print(MY_ADDRESS)
