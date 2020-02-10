@@ -9,11 +9,15 @@ shopping cart project
 cd Shopping-Cart-Project
 ```
 
-##setup
+## setup
 
-packages to install
+install the dotenv package
 
+```sh
+pip install python-dotenv
+```
 
 ## usage
 ```sh
 python shoppingCartProject.py
+```
