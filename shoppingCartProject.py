@@ -4,18 +4,12 @@ import os
 from dotenv import load_dotenv 
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-
+import http.client
 
 load_dotenv()
 
 #sets tax rate from env variable
 taxRate = float(os.getenv("TAX_RATE", "0.0"))
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
-MY_ADDRESS = os.getenv("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
-
-client = SendGridAPIClient(SENDGRID_API_KEY)
-
-subject = "Your Receipt from the Big Brain Food Store"
 
 
 
@@ -134,4 +128,53 @@ print(f"Total: {to_usd(total)}")
 print("---------------------------------")
 print("THANKS, SEE YOU AGAIN SOON!")
 print("---------------------------------")
+
+
+
+
+
+# email functionality goes here
+
+SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
+MY_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
+
+client = SendGridAPIClient(SENDGRID_API_KEY)
+
+subject = "Your Receipt from the Big Brain Food Store"
+
+MY_ADDRESS = str(MY_ADDRESS)
+
+html_content = "Hello World"
+
+print('html: ', html_content)
+print('myEmail: ', MY_ADDRESS)
+#message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS, subject=subject, html_content=html_content)
+
+
+
+
+print("my address")
+print(MY_ADDRESS)
+print(type(MY_ADDRESS))
+print()
+print("client")
+print(client)
+print()
+try:
+    response = client.send(message)
+
+    print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
+    print()
+    print(response.status_code) #> 202 indicates SUCCESS
+    print()
+    print(response.body)
+    print()
+    print(response.headers)
+    print()
+
+except Exception as e:
+    print("email failed to send", e.message)
+    print("IN EXCEPTION")
+
+
 
