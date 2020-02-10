@@ -2,9 +2,6 @@ import datetime
 import time
 import os
 from dotenv import load_dotenv 
-from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
-import http.client
 
 load_dotenv()
 
@@ -130,66 +127,6 @@ print("THANKS, SEE YOU AGAIN SOON!")
 print("---------------------------------")
 
 
-
-
-
-# email functionality goes here
-
-SENDGRID_API_KEY = os.environ.get("SENDGRID_API_KEY", "OOPS, please set env var called 'SENDGRID_API_KEY'")
-MY_ADDRESS = os.environ.get("MY_EMAIL_ADDRESS", "OOPS, please set env var called 'MY_EMAIL_ADDRESS'")
-
-client = SendGridAPIClient(SENDGRID_API_KEY)
-
-subject = "Your Receipt from the Big Brain Food Store"
-
-MY_ADDRESS = str(MY_ADDRESS)
-
-html_content = "Hello World"
-
-print('html: ', html_content)
-print('myEmail: ', MY_ADDRESS)
-#message = Mail(from_email=MY_ADDRESS, to_emails=MY_ADDRESS, subject=subject, html_content=html_content)
-
-
-
-conn = http.client.HTTPSConnection("api.sendgrid.com")
-
-
-payload = "{\"personalizations\":[{\"to\":[{\"email\":\"jack@longarzo.com\",\"name\":\"John Doe\"}],\"dynamic_template_data\":{\"verb\":\"\",\"adjective\":\"\",\"noun\":\"\",\"currentDayofWeek\":\"\"},\"subject\":\"Hello, World!\"}],\"from\":{\"email\":\"jack@longarzo.com\",\"name\":\"John Doe\"},\"reply_to\":{\"email\":\"jack@longarzo.com\",\"name\":\"John Doe\"},\"template_id\":\"d-fe9ad486774c488fa28fdba2c92fd4b5\"}"
-
-headers = {
-    'authorization': "Bearer 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",
-    'content-type': "application/json"
-    }
-
-conn.request("POST", "/v3/mail/send", payload, headers)
-
-res = conn.getresponse()
-data = res.read()
-
-
-print("my address")
-print(MY_ADDRESS)
-print(type(MY_ADDRESS))
-print()
-print("client")
-print(client)
-print()
-try:
-    response = client.send(message)
-
-    print("RESPONSE:", type(response)) #> <class 'python_http_client.client.Response'>
-    print()
-    print(response.status_code) #> 202 indicates SUCCESS
-    print()
-    print(response.body)
-    print()
-    print(response.headers)
-    print()
-
-except Exception as e:
-    print("email failed to send", e.message)
-    print("IN EXCEPTION")
 
 
 
