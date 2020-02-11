@@ -1,6 +1,12 @@
 # Shopping-Cart-Project
-shopping cart project
 
+This is the shopping cart project for OPIM 243,
+below are instructions on how to download, install, and run the code
+
+
+## Download
+
+Download the code using GitHub desktop
 
 ## Installation
 
