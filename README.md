@@ -4,6 +4,7 @@ shopping cart project
 
 ## Installation
 
+Navigate to the project directory
 
 ```sh
 cd Shopping-Cart-Project
@@ -11,13 +12,16 @@ cd Shopping-Cart-Project
 
 ## Setup
 
-install the dotenv package
+use the following terminal command to install the required dotenv package
 
 ```sh
 pip install python-dotenv
 ```
 
 ## Usage
+
+Compile with the following command
+
 ```sh
 python shoppingCartProject.py
 ```
