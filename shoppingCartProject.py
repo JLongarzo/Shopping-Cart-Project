@@ -1,14 +1,14 @@
 import datetime
 import time
 import os
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
 
 load_dotenv()
 
 #sets tax rate from env variable
 taxRate = float(os.getenv("TAX_RATE", "0.0"))
 
-
+#test comment
 
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
@@ -125,8 +125,3 @@ print(f"Total: {to_usd(total)}")
 print("---------------------------------")
 print("THANKS, SEE YOU AGAIN SOON!")
 print("---------------------------------")
-
-
-
-
-
