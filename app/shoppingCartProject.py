@@ -46,6 +46,12 @@ def checkValidity(uInput, prodIds):
 
 
 def to_usd(my_price):
+        """
+        Converts a float or int to to usd format.
+
+        Param: my_price (any int or float) like 14 or 14.849285
+
+        """
     return f"${my_price:,.2f}"
 
 def computeTax(subTotal, taxRate):
