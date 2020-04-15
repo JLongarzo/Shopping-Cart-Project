@@ -1,14 +1,14 @@
 import datetime
 import time
 import os
-from dotenv import load_dotenv 
+from dotenv import load_dotenv
 
 load_dotenv()
 
 #sets tax rate from env variable
 taxRate = float(os.getenv("TAX_RATE", "0.0"))
 
-
+#test comment
 
 products = [
     {"id":1, "name": "Chocolate Sandwich Cookies", "department": "snacks", "aisle": "cookies cakes", "price": 3.50},
@@ -34,10 +34,10 @@ products = [
 ] # based on data from Instacart: https://www.instacart.com/datasets/grocery-shopping-2017
 
 #try and catch to catch an invalid string input
-def checkValidity(uInput):
+def checkValidity(uInput, prodIds):
     validity = False
     try:
-        if (int(uInput) in productIds):
+        if (int(uInput) in prodIds):
             validity = True
     except:
         validity = False
@@ -48,85 +48,91 @@ def checkValidity(uInput):
 def to_usd(my_price):
     return f"${my_price:,.2f}"
 
+def computeTax(subTotal, taxRate):
+    return subTotal*taxRate
 
 
-productIds = []
-i = 0
-
-#get array of only product ids
-while (i < len(products)):
-    iProduct = products[i]
-    productIds.append(iProduct["id"])
-    i = i + 1
-
-
-#array of product identifiers
-userBought = []
-
-
-#conditional for if user returned an incorrect value
-#essential to catch edge case if user inputs invalid product identifier and prooceeds to input DONE
-inputInvalid = False
-
-#instantiate userInput as an empty string as it must exist before we enter the loop
-userInput = ""
+def computeTotal(subTotal, tax):
+    return subTotal+tax
 
 
 
-#open loop - while input != done
-while (userInput != "DONE"):
-    userInput = ""
-    if (inputInvalid == True):
-        userInput = input("incorrect product identifier, please try again: ")
-    else:
-        userInput = input("Please Input a Product Identifier: ")
 
-    #reset conditional
+if __name__ == "__main__":
+
+
+    productIds = []
+    i = 0
+
+    #get array of only product ids
+    while (i < len(products)):
+        iProduct = products[i]
+        productIds.append(iProduct["id"])
+        i = i + 1
+
+
+    #array of product identifiers
+    userBought = []
+
+
+    #conditional for if user returned an incorrect value
+    #essential to catch edge case if user inputs invalid product identifier and prooceeds to input DONE
     inputInvalid = False
 
-
-    if (checkValidity(userInput) == True):
-        #append to the product identifier to an array, we will format print value in print loop
-        userBought.append(int(userInput))
-
-    else:
-        inputInvalid = True
-
-#code for setting time found from: https://www.programiz.com/python-programming/datetime/current-datetime
-t = time.localtime()
-currentTime = time.strftime("%I:%m %p", t)
-
-print("---------------------------------")
-print("Big Brain Food Store")
-print("---------------------------------")
-print(f"CHECKOUT AT: {str(datetime.date.today())} {currentTime}") #how to print time?? ------
-print("---------------------------------")
-
-#enter loop to print contents of the user's inputs
-subtotal = 0
-i = 0
-while (i < len(userBought)):
-    purchasedProduct = products[userBought[i]]
-    print(f" + {purchasedProduct['name']} ({to_usd(purchasedProduct['price'])})")
-    subtotal = subtotal + purchasedProduct['price']
-
-
-    i = i + 1
-
-
-tax = subtotal*taxRate
-total = subtotal + tax
-
-print("---------------------------------")
-#subtotal... etc goes here - calculate them in loop
-print(f"Subtotal: {to_usd(subtotal)}")
-print(f"Plus NYC Sales Tax ({str(taxRate*100)}%): {to_usd(tax)}")
-print(f"Total: {to_usd(total)}")
-print("---------------------------------")
-print("THANKS, SEE YOU AGAIN SOON!")
-print("---------------------------------")
+    #instantiate userInput as an empty string as it must exist before we enter the loop
+    userInput = ""
 
 
 
+    #open loop - while input != done
+    while (userInput != "DONE"):
+        userInput = ""
+        if (inputInvalid == True):
+            userInput = input("incorrect product identifier, please try again: ")
+        else:
+            userInput = input("Please Input a Product Identifier: ")
+
+        #reset conditional
+        inputInvalid = False
 
 
+        if (checkValidity(userInput, productIds) == True):
+            #append to the product identifier to an array, we will format print value in print loop
+            userBought.append(int(userInput))
+
+        else:
+            inputInvalid = True
+
+    #code for setting time found from: https://www.programiz.com/python-programming/datetime/current-datetime
+    t = time.localtime()
+    currentTime = time.strftime("%I:%m %p", t)
+
+    print("---------------------------------")
+    print("Big Brain Food Store")
+    print("---------------------------------")
+    print(f"CHECKOUT AT: {str(datetime.date.today())} {currentTime}") #how to print time?? ------
+    print("---------------------------------")
+
+    #enter loop to print contents of the user's inputs
+    subtotal = 0
+    i = 0
+    while (i < len(userBought)):
+        purchasedProduct = products[userBought[i]]
+        print(f" + {purchasedProduct['name']} ({to_usd(purchasedProduct['price'])})")
+        subtotal = subtotal + purchasedProduct['price']
+
+
+        i = i + 1
+
+
+    tax = computeTax(subtotal, taxRate)
+    total = computeTotal(subtotal, tax)
+
+    print("---------------------------------")
+    #subtotal... etc goes here - calculate them in loop
+    print(f"Subtotal: {to_usd(subtotal)}")
+    print(f"Plus NYC Sales Tax ({str(taxRate*100)}%): {to_usd(tax)}")
+    print(f"Total: {to_usd(total)}")
+    print("---------------------------------")
+    print("THANKS, SEE YOU AGAIN SOON!")
+    print("---------------------------------")
