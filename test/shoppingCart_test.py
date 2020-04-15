@@ -4,6 +4,7 @@ import pytest
 from app.shoppingCartProject import to_usd, checkValidity, computeTax, computeTotal
 
 def test_to_usd():
+
     result = to_usd(40.5)
     assert result == "$40.50"
 

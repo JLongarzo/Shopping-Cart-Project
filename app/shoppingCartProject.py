@@ -35,6 +35,14 @@ products = [
 
 #try and catch to catch an invalid string input
 def checkValidity(uInput, prodIds):
+    """
+    Checks the validity of a user input both regarding format and value.
+
+    Param: uInput (any int within the range of product Ids) like 14 or 2
+            prodIds (an array of ints) like [1,2,3,4,5]
+
+    """
+
     validity = False
     try:
         if (int(uInput) in prodIds):
@@ -46,13 +54,33 @@ def checkValidity(uInput, prodIds):
 
 
 def to_usd(my_price):
+    """
+    Converts a float or int to to usd format.
+
+    Param: my_price (any int or float) like 14 or 14.849285
+
+    """
     return f"${my_price:,.2f}"
 
 def computeTax(subTotal, taxRate):
+    """
+    Computes the amount of sales tax in dollars.
+
+    Param: subTotal (any int or float) like 150 or 152.55556
+            taxRate (any float) like .05, or .15
+
+    """
     return subTotal*taxRate
 
 
 def computeTotal(subTotal, tax):
+    """
+    Computes the total cost of the purchase in dollars.
+
+    Param: subTotal (any int or float) like 150 or 152.55556
+            tax (any float or int) like 4, or 4.53
+
+    """
     return subTotal+tax
 
 
