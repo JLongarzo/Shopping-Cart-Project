@@ -4,6 +4,6 @@ python:
   - "3.7"
 install:
   - pip install pytest
-  - pip install pyton-dotenv
+  - pip install python-dotenv
 script:
   - pytest
